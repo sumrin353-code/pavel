@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172033">
+<meta name="description" content="দোকানের গোপন অক্ষর কোড থেকে সংখ্যায় রূপান্তর করুন">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<title>PAVEL SECRET CODE</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f5f8;color:#172033;font-family:system-ui,"Noto Sans Bengali",sans-serif;padding:18px}
+main{max-width:480px;margin:20px auto;background:white;border-radius:20px;padding:22px;box-shadow:0 8px 28px #15223818}
+h1{font-size:23px;margin:0 0 8px}p{color:#596579;margin-top:0}
+label{display:block;font-weight:700;margin:20px 0 8px}
+input{width:100%;font-size:30px;padding:14px;border:2px solid #cbd5e1;border-radius:12px;text-transform:uppercase;letter-spacing:4px}
+.result{margin-top:18px;background:#eaf7ef;border-radius:14px;padding:18px}
+.small{font-size:14px;color:#526174}.number{font-size:42px;font-weight:800;letter-spacing:2px;color:#087443;word-break:break-all;min-height:52px}
+button{border:0;border-radius:11px;padding:12px 16px;font-size:16px;font-weight:700;margin:12px 8px 0 0;background:#172033;color:white}
+button.secondary{background:#e8edf4;color:#172033}
+table{width:100%;border-collapse:collapse;margin-top:18px}td,th{padding:9px;border-bottom:1px solid #e7ebf0;text-align:center}
+footer{font-size:12px;color:#718096;margin-top:16px}
+</style>
+</head>
+<body>
+<main>
+<h1>PAVEL SECRET CODE</h1>
+<p>অক্ষর লিখুন—সঙ্গে সঙ্গে সংখ্যায় বদলে যাবে।</p>
+<label for="code">আপনার দোকানের কোড লিখুন</label>
+<input id="code" autocomplete="off" autocapitalize="characters" placeholder="যেমন MKL" autofocus>
+<div class="result">
+<div class="small">সংখ্যা / দাম</div>
+<div class="number" id="out">—</div>
+<button id="copy">কপি করুন</button><button class="secondary" id="clear">মুছুন</button>
+</div>
+<table>
+<tr><th>অক্ষর</th><th>M</th><th>K</th><th>L</th><th>D</th><th>P</th></tr>
+<tr><th>সংখ্যা</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+<tr><th>অক্ষর</th><th>B</th><th>U</th><th>Y</th><th>X</th><th>N</th></tr>
+<tr><th>সংখ্যা</th><td>6</td><td>7</td><td>8</td><td>9</td><td>0</td></tr>
+</table>
+<footer>অফলাইনে কাজ করে। আপনার কোড কোথাও পাঠানো হয় না।</footer>
+</main>
+<script>
+const map={M:"1",K:"2",L:"3",D:"4",P:"5",B:"6",U:"7",Y:"8",X:"9",N:"0"};
+const input=document.getElementById("code"),out=document.getElementById("out");
+function convert(){const s=input.value.toUpperCase().replace(/\s+/g,"");input.value=s;out.textContent=s?Array.from(s).map(c=>map[c]??"?").join(""):"—";}
+input.addEventListener("input",convert);
+document.getElementById("clear").onclick=()=>{input.value="";convert();input.focus();};
+document.getElementById("copy").onclick=async()=>{if(out.textContent!=="—"&&!out.textContent.includes("?")){try{await navigator.clipboard.writeText(out.textContent);document.getElementById("copy").textContent="কপি হয়েছে";setTimeout(()=>document.getElementById("copy").textContent="কপি করুন",1400);}catch(e){}}};
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));}
+</script>
+</body></html>
